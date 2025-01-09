@@ -8,7 +8,7 @@ services:
     ports:
       - "3002:3002"
     networks:
-      - meet-db-minio_meet-network
+      - dockerfiles_meet-network
 
   meetadminbackend:
     build:
@@ -17,7 +17,7 @@ services:
     ports:
       - "3001:3001"
     networks:
-      - meet-db-minio_meet-network
+      - dockerfiles_meet-network
 
   frontend:
     build:
@@ -29,7 +29,7 @@ services:
       - meetbackend
       - meetadminbackend
     networks:
-      - meet-db-minio_meet-network
+      - dockerfiles_meet-network
   adminfrontend:
     build:
       context: ./meet-admin-frontend
@@ -40,8 +40,8 @@ services:
       - meetbackend
       - meetadminbackend
     networks:
-      - meet-db-minio_meet-network
+      - dockerfiles_meet-network
 networks:
-  meet-db-minio_meet-network:
+  dockerfiles_meet-network:
     external: true
 
