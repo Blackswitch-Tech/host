@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  meetbackend:
+    build:
+      context: ./meet-backend
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    networks:
+      - meet-db-minio_meet-network
+
+  meetadminbackend:
+    build:
+      context: ./meet-admin-backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    networks:
+      - meet-db-minio_meet-network
+
+  frontend:
+    build:
+      context: ./meet-frontend  # Update with the path to your frontend project
+      dockerfile: Dockerfile
+    ports:
+      - "8082:80"
+    depends_on:
+      - meetbackend
+      - meetadminbackend
+    networks:
+      - meet-db-minio_meet-network
+  adminfrontend:
+    build:
+      context: ./meet-admin-frontend
+      dockerfile: Dockerfile
+    ports: 
+      - "8080:80"
+    depends_on:
+      - meetbackend
+      - meetadminbackend
+    networks:
+      - meet-db-minio_meet-network
+networks:
+  meet-db-minio_meet-network:
+    external: true
+
